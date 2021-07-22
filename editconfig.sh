@@ -15,7 +15,6 @@ WORKER=$2
 CONFIGFILE=$3
 
 sed -i 's/"url": *"[^"]*",/"url": "gulf.moneroocean.stream:10032",/' ./$CONFIGFILE
-#sed -i 's/"user": *"[^"]*",/"user": "45RstxA5kdoQ56ygpDkPkp9RfPAkVm7U4jjBeWUsFTAyRxaerpYMgtYKjwAKy4Q5id2UNSnjFVFTbeHASQbNfM1xK47EWUD",/' ./config.json
 sed -i 's/"user": *"[^"]*",/"user": "'$MOADDY'",/' ./$CONFIGFILE
 sed -i 's/"pass": *"[^"]*",/"pass": "'"$WORKER"'",/' ./$CONFIGFILE
 

@@ -14,6 +14,7 @@ MOADDY=$1
 WORKER=$2
 CONFIGFILE=$3
 
+# can change to 20128 for ssl
 sed -i 's/"url": *"[^"]*",/"url": "gulf.moneroocean.stream:10032",/' ./$CONFIGFILE
 sed -i 's/"user": *"[^"]*",/"user": "'$MOADDY'",/' ./$CONFIGFILE
 sed -i 's/"pass": *"[^"]*",/"pass": "'"$WORKER"'",/' ./$CONFIGFILE

@@ -25,6 +25,10 @@ help_screen() {
 }
 
 git_and_build_hwloc() {
+        if [ ! -d "$GITDIR" ]; then
+                mkdir "$GITDIR"
+        fi
+        
        cd "$GITDIR"
        git clone https://github.com/protomens/hwloc
        cd hwloc
@@ -40,6 +44,10 @@ update_xmrig() {
                 echo "Done."
         fi
 
+        if [ ! -d "$GITDIR" ]; then
+                mkdir "$GITDIR"
+        fi
+        
         cd "$GITDIR"
         
         if [ -d "$XMRIGDIR" ]; then
@@ -49,6 +57,8 @@ update_xmrig() {
         if [ ! -d "$HWLOCDIR" ]; then
                 git_and_build_hwloc
         fi
+        
+        cd "$GITDIR"
       
         if [[ $BETA -eq 1 ]]; then          
                 git clone https://github.com/MoneroOcean/xmrig

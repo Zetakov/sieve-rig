@@ -2,6 +2,7 @@
 
 UPDATE=0
 BETA=0
+C3=0
 GITDIR="/data/data/com.termux/files/home/git"
 HWLOCDIR="$GITDIR/hwloc"
 XMRIGDIR="$GITDIR/xmrig"
@@ -17,7 +18,8 @@ help_screen() {
         echo " "
         echo "Options: "
         echo "          --update,    Update to the newsest stable release of xmrig-mo."
-        echo "          --mo,        Update to the newest and untested xmrig-mo release from MoneroOcean."
+        echo "          --mo,        Update (or install) to the newest and untested xmrig-mo release from MoneroOcean."
+        echo "          --c3,        Update (or install) the newest xmrig-C3 from C3pool. " 
         echo "          -h|--help,   This help screen."
         echo " "
         exit                
@@ -62,7 +64,9 @@ update_xmrig() {
       
         if [[ $BETA -eq 1 ]]; then          
                 git clone https://github.com/MoneroOcean/xmrig
-        else
+        elif [[ $C3 -eq 1 ]]; then
+                git clone https://github.com/C3pool/xmrig-C3 xmrig
+        else    
                 git clone https://github.com/SIEVEofEratosthenes/xmrig
         fi
         
@@ -87,13 +91,16 @@ fresh_install() {
         echo " "
         echo -ne "Installing dependencies: (autoconf automake cmake git libtool)..."
         sleep 2
-        apt-get -q -y install autoconf automake cmake git libtool 
+        apt-get -q -y install autoconf automake cmake git libtool bintuils
+        apt-get upgrade -y
         echo "Done."
         echo "Getting gits: (hwloc, xmrig, sieve-rig)..."
         mkdir git && cd git
 
         if [[ $BETA -eq 1 ]]; then          
                 git clone https://github.com/MoneroOcean/xmrig
+        elif [[ $C3 -eq 1 ]]; then
+                git clone https://github.com/C3pool/xmrig-C3 xmrig
         else
                 git clone https://github.com/SIEVEofEratosthenes/xmrig
         fi
@@ -136,6 +143,10 @@ while [ "$#" -gt 0 ]; do
                         ;;
                 --mo)
                         BETA=1
+                        shift
+                        ;;
+                --c3)
+                        C3=1
                         shift
                         ;;
                 -h|--help)

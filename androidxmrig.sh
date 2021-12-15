@@ -1,6 +1,7 @@
 #!/bin/bash
 
 UPDATE=0
+UPDATEALL=0
 BETA=0
 C3=0
 GITDIR="/data/data/com.termux/files/home/git"
@@ -17,7 +18,8 @@ help_screen() {
         echo "      ./androidxmrig.sh [options]"
         echo " "
         echo "Options: "
-        echo "          --update,    Update to the newsest stable release of xmrig-mo."
+        echo "          --update,     Update to the newsest stable release of xmrig-mo."
+        echo "          --update-all, Update to the newsest release of xmrig-mo and its dependencies."
         echo "          --mo,        Update (or install) to the newest and untested xmrig-mo release from MoneroOcean."
         echo "          --c3,        Update (or install) the newest xmrig-C3 from C3pool. " 
         echo "          -h|--help,   This help screen."
@@ -31,9 +33,13 @@ git_and_build_hwloc() {
                 mkdir "$GITDIR"
         fi
         
-       cd "$GITDIR"
-       git clone https://github.com/protomens/hwloc
-       cd hwloc
+        if [ -d "$HWLOCDIR" ]; then
+                rm -rf "$HWLOCDIR"
+        fi
+        
+        cd "$GITDIR"
+        git clone https://github.com/open-mpi/hwloc
+        cd hwloc
         ./autogen.sh && ./configure &&  make
 
 }
@@ -45,6 +51,9 @@ update_xmrig() {
                 sleep 1
                 echo "Done."
         fi
+        
+        apt-get -q -y install autoconf automake cmake git libtool bintuils
+        apt-get upgrade -y
 
         if [ ! -d "$GITDIR" ]; then
                 mkdir "$GITDIR"
@@ -56,7 +65,7 @@ update_xmrig() {
                 rm -rf xmrig
         fi
         
-        if [ ! -d "$HWLOCDIR" ]; then
+        if [ ! -d "$HWLOCDIR" ] || [ $UPDATEALL -eq 1 ] ; then
                 git_and_build_hwloc
         fi
         
@@ -141,6 +150,10 @@ while [ "$#" -gt 0 ]; do
                         UPDATE=1
                         shift
                         ;;
+                --update-all)
+                        UPDATEALL=1
+                        shift
+                        ;;
                 --mo)
                         BETA=1
                         shift
@@ -161,7 +174,7 @@ while [ "$#" -gt 0 ]; do
 done
 
 
-if [[ $UPDATE -eq 1 ]]; then
+if [[ $UPDATE -eq 1 ]] || [[ $UPDATEALL -eq 1 ]]; then
         update_xmrig
 else
         fresh_install

@@ -51,9 +51,6 @@ update_xmrig() {
                 sleep 1
                 echo "Done."
         fi
-        
-        echo "Change repo to Albatross and do a full upgrade. Press enter to conintue...."
-        read blah
         termux-change-repo
         apt-get -q -y install autoconf automake cmake git libtool bintuils
         apt-get full-upgrade -y
@@ -95,7 +92,7 @@ update_xmrig() {
 
 
 fresh_install() {
-        echo "We need to change the termux repo. Select (Albatross) for best results on main repo"
+        echo "We need to change the termux repo. Select (Albatrosss) for best results on main repo"
         echo -ne "(Press enter to continue): "
         read blah
         sleep 1
@@ -103,8 +100,8 @@ fresh_install() {
         echo " "
         echo -ne "Installing dependencies: (autoconf automake cmake git libtool)..."
         sleep 2
-        apt-get -q -y install autoconf automake cmake git libtool bintuils
         apt-get full-upgrade -y
+        apt-get -q -y install autoconf automake cmake git libtool binutils
         echo "Done."
         echo "Getting gits: (hwloc, xmrig, sieve-rig)..."
         mkdir git && cd git

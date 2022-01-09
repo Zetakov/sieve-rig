@@ -51,9 +51,14 @@ update_xmrig() {
                 sleep 1
                 echo "Done."
         fi
+        echo "We need to change the termux repo. Select (Albatrosss) for best results on main repo"
+        echo -ne "(Press enter to continue): "
+        read blah
+        sleep 1
         termux-change-repo
-        apt-get -q -y install autoconf automake cmake git libtool bintuils
         apt-get full-upgrade -y
+        apt-get -q -y install autoconf automake cmake git libtool binutils
+
 
         if [ ! -d "$GITDIR" ]; then
                 mkdir "$GITDIR"

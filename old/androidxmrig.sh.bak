@@ -51,14 +51,9 @@ update_xmrig() {
                 sleep 1
                 echo "Done."
         fi
-        echo "We need to change the termux repo. Select (Albatrosss) for best results on main repo"
-        echo -ne "(Press enter to continue): "
-        read blah
-        sleep 1
         termux-change-repo
-        apt-get full-upgrade -y
         apt-get -q -y install autoconf automake cmake git libtool binutils
-
+        apt-get full-upgrade -y
 
         if [ ! -d "$GITDIR" ]; then
                 mkdir "$GITDIR"
@@ -137,7 +132,7 @@ fresh_install() {
         sed '/"tls":.*$/{n;s/false/true/}' -i ./config.json
         sed -i 's/"mode": *"[^"]*",/"mode": "lite",/' ./config.json
         cd /data/data/com.termux/files/home
-        ln -s /data/data/com.termux/files/home/git/xmrig/build/xmrig xmrig
+        ln -s git/xmrig/build/xmrig xmrig
         echo "If all went as planned we will run xmrig-mo with benchmarking. If termux exits after benchmarking, either restart temux and xmrig or reboot the phone. This has to do with memory heaps being garbled during benchmarking."
         echo " "
         echo "Running xmrig and benchmarking...."

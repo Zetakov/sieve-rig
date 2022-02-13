@@ -13,7 +13,7 @@ XMRIGDIR="$GITDIR/xmrig"
 help_screen() { 
 	__usage="
 
-         AndroidXmrig-mo v0.3.0  (Burt Bacharach)
+         AndroidXmrig-mo v0.5.1  (Maimonides)
          
          Usage:
                ./androidxmrig.sh [options]
